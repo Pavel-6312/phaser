@@ -64,7 +64,7 @@ var config = {
     //Stars
         stars = this.physics.add.group({
             key: 'star',
-            repeat: 12,
+            repeat: 11,
             setXY: { x: 12, y: 0, stepX: 70 }
         });
 
@@ -139,7 +139,7 @@ var config = {
         star.disableBody(true, true);
 
         //  Add and update the score
-        score += 10;
+        score += 1;
         scoreText.setText('Score: ' + score);
 
         if (stars.countActive(true) === 0)
@@ -157,7 +157,7 @@ var config = {
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
             bomb.allowGravity = false;
 
-             var bomb = bombs.create(x, 16, 'bomb');
+            var bomb = bombs.create(x, 16, 'bomb');
             bomb.setBounce(1);
             bomb.setCollideWorldBounds(true);
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
