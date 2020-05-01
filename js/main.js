@@ -27,19 +27,7 @@ var config = {
     var score = 0;
     var gameOver = false;
     var scoreText;
-
-//PRELOAD
-    function preload ()
-    {
-        this.load.image('grave-bg', 'assets/graveyard/png/BG.png');
-        this.load.image('ground', 'assets/platform.png');
-        this.load.image('star', 'assets/star.png');
-        this.load.image('bomb', 'assets/bomb.png');
-        this.load.spritesheet('dude', 'assets/dude.png',
-            { frameWidth: 32, frameHeight: 48 }
-            
-        );   
-    }
+    var stones;
 
 //CREATE
     function create ()
@@ -59,7 +47,7 @@ var config = {
         platforms.create(650, 200, 'ground');
 
     //Score
-        scoreText = this.add.text(16, 16, 'Score:0', { fontSize: '16px', fill: '#fff' });
+        scoreText = this.add.text(16.5, 16.5, 'Score:0', { fontSize: '24px', fill: '#fff', fontFamily: 'Arial' });
 
     //Stars
         stars = this.physics.add.group({
@@ -74,6 +62,9 @@ var config = {
 
     //Bombs
         bombs = this.physics.add.group();
+
+    //Stone
+        stones = this.physics.add.sprite(480, 420, 'stone2');
 
     //Player
         player = this.physics.add.sprite(100, 450, 'dude');
@@ -100,8 +91,10 @@ var config = {
             repeat: -1
         });
 
+
     //Collider
         this.physics.add.collider(player, platforms);
+        this.physics.add.collider(stones, platforms);
         this.physics.add.collider(stars, platforms);
         this.physics.add.collider(bombs, platforms);
 
@@ -109,28 +102,9 @@ var config = {
         this.physics.add.overlap(player, stars, collectStar, null, this);
         this.physics.add.collider(player, bombs, hitBomb, null, this);
 
-    //Keyboard control
+    // Keyboard controls
         cursors = this.input.keyboard.createCursorKeys();
-    }
-
-//UPDATE
-    function update ()
-    {
-        if (cursors.left.isDown){
-            player.setVelocityX(-240);
-            player.anims.play('left', true);
-        } 
-        else if (cursors.right.isDown){
-            player.setVelocityX(240);
-            player.anims.play('right', true);
-        } 
-        else{
-            player.setVelocityX(0);
-            player.anims.play('turn');
-        }
-        if (cursors.up.isDown && player.body.touching.down){
-            player.setVelocityY(-550);
-        }
+        
     }
 
 //Disable body on collision
@@ -150,12 +124,6 @@ var config = {
             });
 
             var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-            var bomb = bombs.create(x, 16, 'bomb');
-            bomb.setBounce(1);
-            bomb.setCollideWorldBounds(true);
-            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-            bomb.allowGravity = false;
 
             var bomb = bombs.create(x, 16, 'bomb');
             bomb.setBounce(1);
