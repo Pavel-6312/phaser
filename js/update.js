@@ -13,13 +13,11 @@
             player.setVelocityX(0);
             player.anims.play('turn');
         }
+        
         if (cursors.up.isDown && player.body.touching.down){
             player.setVelocityY(-550);
         }
         if (cursors.down.isDown){
             player.setVelocityY(400);
         }
-        // if (fireButton.isDown){
-        //     weapon.fire();
-        // }
     }
